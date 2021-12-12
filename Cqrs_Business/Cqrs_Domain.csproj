@@ -5,12 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Cqrs_Data\Cqrs_Data.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Commands\" />
-    <Folder Include="Queries\" />
+    <ProjectReference Include="..\Cqrs_DataAccess\Cqrs_DataAccess.csproj" />
   </ItemGroup>
 
 </Project>

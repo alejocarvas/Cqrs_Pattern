@@ -6,12 +6,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Cqrs_Data\Cqrs_Data.csproj" />
-    <ProjectReference Include="..\Cqrs_Domain\Cqrs_Domain.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Commands\" />
-    <Folder Include="Queries\" />
   </ItemGroup>
 
 </Project>
