@@ -18,19 +18,51 @@ namespace Cqrs_Domain.Commands.Implementations
         }
 
         /// <summary>
-        /// 
+        /// Create a new user
         /// </summary>
-        /// <param name="name"></param>
-        /// <param name="age"></param>
+        /// <param name="user">Object User with the information</param>
         /// <returns></returns>
-        public Task<int> CreateUser(string name, int age)
+        public async Task<int> CreateUser(User user)
         {
-            _repository.Save(new User()
-            {
-                Name = name,
-                Age = age
-            });
-            return Task.FromResult(0);
+            return await _repository.Save(user);
+        }
+
+        /// <summary>
+        /// Delete a user by id
+        /// </summary>
+        /// <param name="id">User identifier</param>
+        public void DeleteUser(int id)
+        {
+            _repository.Delete(id);
+        }
+
+        /// <summary>
+        /// Update a new user
+        /// </summary>
+        /// <param name="user">Object User with the information</param>
+        public void UpdateUser(User user)
+        {
+            _repository.Update(user);
+        }
+
+        /// <summary>
+        /// Update user age
+        /// </summary>
+        /// <param name="id">User identifier</param>
+        /// <param name="age">User age</param>
+        public void UpdateUserAge(int id, int age)
+        {
+            _repository.UpdateAge(id, age);
+        }
+
+        /// <summary>
+        /// Update user name
+        /// </summary>
+        /// <param name="id">User identifier</param>
+        /// <param name="name">User name</param>
+        public void UpdateUserName(int id, string name)
+        {
+            _repository.UpdateName(id, name);
         }
     }
 }
