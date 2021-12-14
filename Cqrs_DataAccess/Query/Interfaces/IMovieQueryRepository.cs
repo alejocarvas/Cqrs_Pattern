@@ -1,10 +1,14 @@
-﻿using System;
+﻿using Cqrs_DTO;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Cqrs_DataAccess.Query.Interfaces
 {
     public interface IMovieQueryRepository
     {
+        IEnumerable<Movie> GetAll();
+        Movie GetById(int id);
+        IEnumerable<Movie> GetByGender(string gender);
+        int MovieCount();
+        IEnumerable<MovieGroupingByGender> GetMoviesByGender();
     }
 }

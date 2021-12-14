@@ -19,6 +19,8 @@ using Cqrs_DataAccess.Command.Implementations;
 using Microsoft.EntityFrameworkCore;
 using Cqrs_Domain.Commands.Interfaces;
 using Cqrs_Domain.Commands.Implementations;
+using API_Command.Extentions;
+using API_Command.Hub;
 
 namespace API_Command
 {
@@ -34,6 +36,7 @@ namespace API_Command
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCustomCors();
             services.AddControllers();
             services.AddMediatR(Assembly.GetExecutingAssembly());
 
@@ -57,7 +60,15 @@ namespace API_Command
 
             services.AddDbContext<CommandContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddScoped<IUserCommandService, UserCommandService>();
+            services.AddScoped<IMovieCommandService, MovieCommandService>();
             services.AddTransient<IUserCommandRepository, UserCommandRepository>();
+            services.AddTransient<IMovieCommandRepository, MovieCommandRepository>();
+
+            // Register SignalR
+            services.AddSignalR(o =>
+            {
+                o.EnableDetailedErrors = true;
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -78,11 +89,14 @@ namespace API_Command
 
             app.UseRouting();
 
+            app.UseCustomCors();
+
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapHub<CqrsPatternHub>("/CqrsPatternHub");
             });
         }
     }

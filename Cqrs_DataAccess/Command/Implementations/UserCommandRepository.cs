@@ -1,10 +1,7 @@
 ﻿using Cqrs_DataAccess.Command.Interfaces;
 using Cqrs_DTO;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Cqrs_DataAccess.Command.Implementations

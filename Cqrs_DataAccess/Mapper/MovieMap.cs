@@ -1,10 +1,7 @@
 ﻿using Cqrs_DTO;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace Cqrs_DataAccess.Command.Mapper
+namespace Cqrs_DataAccess.Mapper
 {
     public class MovieMap
     {

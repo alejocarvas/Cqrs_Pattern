@@ -2,13 +2,14 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Cqrs_DataAccess.Command.Interfaces
 {
     public interface IMovieCommandRepository
     {
-        Movie GetById(long id);
-        void Save(Movie movie);
+        Task<int> Save(Movie movie);
+        void Save(MovieClick movieclick);
         void Update(Movie movie);
         void Delete(long id);
     }

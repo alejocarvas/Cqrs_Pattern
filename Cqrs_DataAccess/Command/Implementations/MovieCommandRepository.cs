@@ -1,10 +1,8 @@
 ﻿using Cqrs_DataAccess.Command.Interfaces;
 using Cqrs_DTO;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
+using System.Threading.Tasks;
 
 namespace Cqrs_DataAccess.Command.Implementations
 {
@@ -12,6 +10,7 @@ namespace Cqrs_DataAccess.Command.Implementations
     {
         private CommandContext context;
         private DbSet<Movie> movieEntity;
+
         public MovieCommandRepository(CommandContext context)
         {
             this.context = context;
@@ -30,9 +29,16 @@ namespace Cqrs_DataAccess.Command.Implementations
             return movieEntity.SingleOrDefault(s => s.Id == id);
         }
 
-        public void Save(Movie movie)
+        public async Task<int> Save(Movie movie)
         {
             context.Entry(movie).State = EntityState.Added;
+            context.SaveChanges();
+            return await Task.FromResult(movie.Id);
+        }
+
+        public void Save(MovieClick movieclick)
+        {
+            context.Entry(movieclick).State = EntityState.Added;
             context.SaveChanges();
         }
 
@@ -40,5 +46,6 @@ namespace Cqrs_DataAccess.Command.Implementations
         {
             context.SaveChanges();
         }
+
     }
 }

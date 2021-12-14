@@ -1,9 +1,6 @@
-﻿using Cqrs_DataAccess.Command.Mapper;
+﻿using Cqrs_DataAccess.Mapper;
 using Cqrs_DTO;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Cqrs_DataAccess.Command
 {
@@ -16,6 +13,8 @@ namespace Cqrs_DataAccess.Command
         {
             base.OnModelCreating(modelBuilder);
             new UserMap(modelBuilder.Entity<User>());
+            new MovieMap(modelBuilder.Entity<Movie>());
+            new MovieClickMap(modelBuilder.Entity<MovieClick>());
         }
     }
 }

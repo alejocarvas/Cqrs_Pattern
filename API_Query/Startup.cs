@@ -1,18 +1,19 @@
+using API_Query.Extentions;
+using Cqrs_DataAccess.Query;
+using Cqrs_DataAccess.Query.Implementations;
+using Cqrs_DataAccess.Query.Interfaces;
+using Cqrs_Domain.Queries.Implementations;
+using Cqrs_Domain.Queries.Interfaces;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using System.Threading.Tasks;
 
 namespace API_Query
 {
@@ -28,6 +29,7 @@ namespace API_Query
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCustomCors();
             services.AddControllers();
 
             services.AddMediatR(Assembly.GetExecutingAssembly());
@@ -49,6 +51,12 @@ namespace API_Query
                     }
                 });
             });
+
+            services.AddDbContext<QueryContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddScoped<IUserQueryService, UserQueryService>();
+            services.AddScoped<IMovieQueryService, MovieQueryService>();
+            services.AddTransient<IUserQueryRepository, UserQueryRepository>();
+            services.AddTransient<IMovieQueryRepository, MovieQueryRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -68,6 +76,8 @@ namespace API_Query
             });
 
             app.UseRouting();
+
+            app.UseCustomCors();
 
             app.UseAuthorization();
 
